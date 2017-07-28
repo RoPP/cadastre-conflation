@@ -1,32 +1,35 @@
+# Batimap (formerly cadastre-conflation)
+
 Ce projet contient plusieurs outils pour simplifier l'import / la mise à jour du bâti sur [OpenStreetMap](https://openstreetmap.org) via l'éditeur [JOSM](https://josm.openstreetmap.de/) et le plugin [Conflation](http://wiki.openstreetmap.org/wiki/JOSM/Plugins/Conflation).
 
-L'état actuel des données peut être visualisé sur http://cadastre.damsy.net (beta).
+L'état actuel des données peut être visualisé sur [cadastre.damsy.net](http://cadastre.damsy.net) (beta).
 
 ![Visualisation de l'état du cadastre](https://user-images.githubusercontent.com/1451988/26934158-d6e63858-4c68-11e7-8cd8-534718e6b3f6.png)
 
-# Contenu de la boîte
+## Contenu de la boîte
 
- * [desktop](./desktop): Intégration système pour JOSM
-   * [josm-mime.xml](./desktop/josm-mime.xml): types MIME (`.jos`, `.joz`, `.osm`) à ouvrir avec JOSM
-   * [icons](./desktop/icons)
-     * [josm.png](./desktop/icons/josm.png): icône associée aux fichiers `.jos` et `.joz`
-     * [osm.svg](./desktop/icons/osm.svg): icône associée aux fichiers `.osm`
-   * [josm.desktop.in](./desktop/josm.desktop.in): Entrée [desktop](https://standards.freedesktop.org/desktop-entry-spec/latest/) pour JOSM
- * [josm-custom.jar](./josm-custom.jar): un JOSM modifié (correction du bug [#14666](https://josm.openstreetmap.de/ticket/14666), coloration des éléments `wall=no`, possibilité de décoller plusieurs éléments d'une seule traite, …)
- * [plugins](./plugins): plugins patchés
-   * [conflation.jar](./plugins/conflation.jar): zoom automatique en cas de problème
-   * [todo.jar](./plugins/todo.jar): ajout d'un bouton "Mark as selected" et gestion du support multicouches
- * [website](./website): code du site https://cadastre.damsy.net
- * [tools](./tools)
-   * [osm-cadastre.py](./tools/osm-cadastre.py): script principal (voir plus bas)
- * [josm-scripts](./josm-scripts): scripts à utiliser dans JOSM via le plugin [Scripting](http://wiki.openstreetmap.org/wiki/JOSM/Plugins/Scripting)
-   * [1segmented.js](./js/1segmented.js): mise en place initiale
-   * [2conflation.js](./js/2conflation.js): mise en place de la conflation
-   * [3cleanup.js](./js/3cleanup.js): nettoyage final
+* [desktop](./desktop): Intégration système pour JOSM
+  * [josm-mime.xml](./desktop/josm-mime.xml): types MIME (`.jos`, `.joz`, `.osm`) à ouvrir avec JOSM
+  * [icons](./desktop/icons)
+    * [josm.png](./desktop/icons/josm.png): icône associée aux fichiers `.jos` et `.joz`
+    * [osm.svg](./desktop/icons/osm.svg): icône associée aux fichiers `.osm`
+  * [josm.desktop.in](./desktop/josm.desktop.in): Entrée [desktop](https://standards.freedesktop.org/desktop-entry-spec/latest/) pour JOSM
+* [josm-custom.jar](./josm-custom.jar): un JOSM modifié (correction du bug [#14666](https://josm.openstreetmap.de/ticket/14666), coloration des éléments `wall=no`, possibilité de décoller plusieurs éléments d'une seule traite, …)
+* [plugins](./plugins): plugins patchés
+  * [conflation.jar](./plugins/conflation.jar): zoom automatique en cas de problème
+  * [todo.jar](./plugins/todo.jar): ajout d'un bouton "Mark as selected" et gestion du support multicouches
+* [website](./website): code du site https://cadastre.damsy.net
+* [tools](./tools)
+  * [osm-cadastre.py](./tools/osm-cadastre.py): script principal (voir plus bas)
+* [josm-scripts](./josm-scripts): scripts à utiliser dans JOSM via le plugin [Scripting](http://wiki.openstreetmap.org/wiki/JOSM/Plugins/Scripting)
+  * [1segmented.js](./js/1segmented.js): mise en place initiale
+  * [2conflation.js](./js/2conflation.js): mise en place de la conflation
+  * [3cleanup.js](./js/3cleanup.js): nettoyage final
 
-# Instructions
+## Instructions
 
 1. Installation de JOSM et des plugins patchés :
+
 ```bash
 mkdir -p $HOME/.local/share/{applications,mime/packages,icons,JOSM/plugins}
 
@@ -52,15 +55,15 @@ test -f "$josm_config" && \
     " >> "$josm_config"
 ```
 
-2. Installer le plugin `Scripting` dans JOSM
+1. Installer le plugin `Scripting` dans JOSM
 
-3. Activer l'accès aux fichiers locaux dans les préférences du Contrôle à distance, nécessaire pour utiliser le script (voir ci-dessous).
+1. Activer l'accès aux fichiers locaux dans les préférences du Contrôle à distance, nécessaire pour utiliser le script (voir ci-dessous).
 
 ![Activation de l'accès aux fichiers locaux](https://user-images.githubusercontent.com/1451988/26930245-137b43fa-4c5d-11e7-8445-5508278ef958.png)
 
-# Description du script osm-cadastre.py
+## Description du script osm-cadastre.py
 
-```
+```bash
 usage: osm-cadastre.py [-h] [--verbose {debug,info,warning,error,no}]
                        [--overpass {overpass.de,api.openstreetmap.fr,localhost}]
                        {stats,generate,work} ...
@@ -74,7 +77,7 @@ optional arguments:
   --overpass {overpass.de,api.openstreetmap.fr,localhost}
 ```
 
-# Guide
+## Guide
 
 Supposons que l'on souhaite mettre à jour le cadastre de [Upie, code insee 26358](http://www.openstreetmap.org/relation/83680) :
 
@@ -101,17 +104,17 @@ Supposons que l'on souhaite mettre à jour le cadastre de [Upie, code insee 2635
 
 Voir le [guide complet](https://wiki.openstreetmap.org/wiki/WikiProject_France/Cadastre/Import_semi-automatique_des_b%C3%A2timents#Utilisation_du_plugin_.C2.ABConflation.C2.BB_dans_JOSM) pour plus d'informations ou le [guide vidéo](https://www.youtube.com/watch?v=8n34tYJXnEI)… ⚠ La démarche a évolué depuis la vidéo.
 
-# Complétion (bash, zsh…)
+## Complétion (bash, zsh…)
 
 Ce projet utilise [argcomplete](https://github.com/kislyuk/argcomplete). Pour faire fonctionner la complétion :
 
-## Pour Bash
+### Pour Bash
 
 ```sh
 eval "$(register-python-argcomplete osm-cadastre)"
 ```
 
-## Pour Zsh
+### Pour Zsh
 
 ```sh
 autoload bashcompinit
